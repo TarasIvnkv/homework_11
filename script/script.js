@@ -5,14 +5,13 @@ const users = [
     ["tyson","green",1,["book", "pen"]],
 ];
 
-let namesExclamationMark = users.forEach(item => {
-    console.log(`${item[0]}!`);
+let namesExclamationMark = [];
+
+users.forEach(item => {
+    namesExclamationMark.push(`${item[0]}!`);
 });
 
-let namesQuestionMark = users.forEach(item => {
-    console.log(`${item[0]}?`);
-});
-
+let namesQuestionMark = users.map(item => `${item[0]}?`);
 
 let filteredUsers = users.filter(item => item[1] === `red`);
 
@@ -20,15 +19,14 @@ let total = filteredUsers.reduce((value, item) => {
     return value + item[2];
 },0);
 
-let tableBody = filteredUsers.map(item => {
-    return `
-        <tr>
-            <td>${item[0]}</td>
-            <td>${item[1]}</td>
-            <td>${item[2]}</td>
-            <td>${item[3].join("; ")}</td>
-        </tr>
-    `;
+const tableBody = filteredUsers.map(user => {
+    const tableCells = user.map(item => {
+        if (Array.isArray(item)) {
+            return item.join("; ");
+        }
+        return item;
+    });
+    return `<tr><td>${tableCells.join("</td><td>")}</td></tr>`;
 });
 
 
